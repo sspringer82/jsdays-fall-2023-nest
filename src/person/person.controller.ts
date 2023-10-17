@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreatePerson, Person } from './Person';
+import { NumberParameter } from 'src/shared/validators/number-parameter';
 
 @Controller('person')
 export class PersonController {
@@ -20,7 +21,7 @@ export class PersonController {
   }
 
   @Get(':id')
-  getOnePerson(@Param('id') id: string) {
+  getOnePerson(@Param() { id }: NumberParameter) {
     return this.personService.getOne(parseInt(id, 10));
   }
 
