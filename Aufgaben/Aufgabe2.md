@@ -12,7 +12,7 @@ Erzeuge einen Controller: `nest generate controller books`
 Erzeuge einen Service: `nest generate service books`
 
 ```ts
-type Book = {
+export type Book = {
   id: number;
   title: string;
   author: string;
@@ -20,4 +20,6 @@ type Book = {
   pages: number;
   year: number;
 }
+
+export type CreateBook = Omit<Book, 'id'>;
 ```
