@@ -20,8 +20,8 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { NumberParameter } from 'src/shared/validators/number-parameter';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { NumberParameter } from '../shared/validators/number-parameter';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('books')
 @UseGuards(JwtAuthGuard)
