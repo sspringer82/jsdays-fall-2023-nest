@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreatePerson, Person } from './Person';
-import { NumberParameter } from 'src/shared/validators/number-parameter';
+import { NumberParameter } from '../shared/validators/number-parameter';
 
 @Controller('person')
 export class PersonController {
