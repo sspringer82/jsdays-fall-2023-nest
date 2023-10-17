@@ -1,11 +1,20 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PersonService } from './person.service';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Person } from './Person';
 
 @Controller('person')
 export class PersonController {
   constructor(private readonly personService: PersonService) {}
 
   @Get()
+  @ApiOperation({ summary: 'Get all persons' })
+  @ApiResponse({
+    status: 200,
+    description: 'Get all persons',
+    type: Person,
+    isArray: true,
+  })
   getAllPersons() {
     return this.personService.getAll();
   }
