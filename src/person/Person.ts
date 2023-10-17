@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, Length } from 'class-validator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('persons')
@@ -12,6 +13,7 @@ export class Person {
     example: 'Klaus',
   })
   @Column()
+  @Length(3, 10)
   firstName: string;
 
   @ApiProperty({
@@ -19,6 +21,7 @@ export class Person {
     example: 'Schmitt',
   })
   @Column()
+  @IsNotEmpty()
   lastName: string;
 }
 

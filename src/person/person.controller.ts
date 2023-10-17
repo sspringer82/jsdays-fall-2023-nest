@@ -24,8 +24,8 @@ export class PersonController {
     return this.personService.getOne(parseInt(id, 10));
   }
 
-  // @Post()
-  // createPerson(@Body() newPerson: any) {
-  //   return this.personService.create(newPerson);
-  // }
+  @Post()
+  createPerson(@Body() newPerson: any) {
+    return this.personService.create(newPerson);
+  }
 }
