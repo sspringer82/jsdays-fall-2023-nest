@@ -17,6 +17,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { NumberParameter } from 'src/shared/validators/number-parameter';
 
 @Controller('books')
 @ApiTags('Books') // Fügen Sie Tags hinzu, um Ihre API-Endpunkte zu organisieren
@@ -43,7 +44,7 @@ export class BooksController {
     description: 'Get one book by Id',
     type: Book, // Verweisen Sie auf den Typ, den Sie verwenden
   })
-  async getBookById(@Param('id') id: string): Promise<Book> {
+  async getBookById(@Param() { id }: NumberParameter): Promise<Book> {
     return this.booksService.getOne(parseInt(id, 10));
   }
 
@@ -69,7 +70,7 @@ export class BooksController {
     type: Book, // Verweisen Sie auf den Typ, den Sie verwenden
   })
   async updateBook(
-    @Param('id') id: string,
+    @Param() { id }: NumberParameter,
     @Body() updatedBook: Book,
   ): Promise<Book> {
     return this.booksService.update(parseInt(id, 10), updatedBook);
@@ -83,7 +84,7 @@ export class BooksController {
     description: 'Delete a book by Id',
   })
   @HttpCode(204) // Setzen Sie den HTTP-Statuscode auf 204
-  async deleteBook(@Param('id') id: string): Promise<void> {
+  async deleteBook(@Param() { id }: NumberParameter): Promise<void> {
     await this.booksService.delete(parseInt(id, 10));
   }
 }
