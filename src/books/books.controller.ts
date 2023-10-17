@@ -8,6 +8,7 @@ import {
   Body,
   HttpCode,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
 import { Book, CreateBook } from './Book';
@@ -89,7 +90,7 @@ export class BooksController {
     description: 'Delete a book by Id',
   })
   @HttpCode(204) // Setzen Sie den HTTP-Statuscode auf 204
-  async deleteBook(@Param() { id }: NumberParameter): Promise<void> {
-    await this.booksService.delete(parseInt(id, 10));
+  async deleteBook(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    await this.booksService.delete(id);
   }
 }
