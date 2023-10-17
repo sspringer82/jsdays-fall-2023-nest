@@ -15,7 +15,7 @@ import { Person } from './person/Person';
       logging: false,
       autoSave: true,
       location: 'database.sqlite',
-      entities: [Person],
+      autoLoadEntities: true,
       migrations: [],
       subscribers: [],
       type: 'sqljs',

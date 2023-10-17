@@ -1,59 +1,38 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Book, CreateBook } from './Book';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class BooksService {
-  private books: Book[] = [];
+  constructor(
+    @InjectRepository(Book) private bookRepository: Repository<Book>,
+  ) {}
 
-  getAll(): Book[] {
-    return this.books;
+  getAll(): Promise<Book[]> {
+    return this.bookRepository.find();
   }
 
-  getOne(id: number): Book {
-    const book = this.findBookById(id);
+  async getOne(id: number): Promise<Book> {
+    const book = this.bookRepository.findOneBy({ id });
     if (!book) {
       throw new NotFoundException(`Book with id ${id} not found`);
     }
     return book;
   }
 
-  create(newBook: CreateBook): Book {
-    const id = this.generateId();
-    const book = { id, ...newBook };
-    this.books.push(book);
-    return book;
+  create(newBook: CreateBook): Promise<Book> {
+    return this.bookRepository.save(newBook);
   }
 
-  update(id: number, updatedBook: Book): Book {
-    const bookIndex = this.findIndexById(id);
-    if (bookIndex === -1) {
-      throw new NotFoundException(`Book with id ${id} not found`);
-    }
-    this.books[bookIndex] = { ...this.books[bookIndex], ...updatedBook };
-    return this.books[bookIndex];
+  async update(id: number, updatedBook: Book): Promise<Book> {
+    await this.getOne(id);
+    return this.bookRepository.save(updatedBook);
   }
 
-  delete(id: number): void {
-    const bookIndex = this.findIndexById(id);
-    if (bookIndex === -1) {
-      throw new NotFoundException(`Book with id ${id} not found`);
-    }
-    this.books.splice(bookIndex, 1);
-  }
+  async delete(id: number): Promise<void> {
+    const book = await this.getOne(id);
 
-  private generateId(): number {
-    const highestId = this.books.reduce(
-      (maxId, book) => (book.id > maxId ? book.id : maxId),
-      0,
-    );
-    return highestId + 1;
-  }
-
-  private findBookById(id: number): Book | undefined {
-    return this.books.find((book) => book.id === id);
-  }
-
-  private findIndexById(id: number): number {
-    return this.books.findIndex((book) => book.id === id);
+    await this.bookRepository.remove(book);
   }
 }
