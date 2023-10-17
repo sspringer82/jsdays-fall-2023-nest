@@ -7,10 +7,12 @@ import {
   Param,
   Body,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
 import { Book, CreateBook } from './Book';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -18,8 +20,11 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { NumberParameter } from 'src/shared/validators/number-parameter';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('books')
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 @ApiTags('Books') // Fügen Sie Tags hinzu, um Ihre API-Endpunkte zu organisieren
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
