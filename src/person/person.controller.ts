@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { Person } from './Person';
+import { CreatePerson, Person } from './Person';
 
 @Controller('person')
 export class PersonController {
@@ -25,7 +25,7 @@ export class PersonController {
   }
 
   @Post()
-  createPerson(@Body() newPerson: any) {
+  createPerson(@Body() newPerson: CreatePerson) {
     return this.personService.create(newPerson);
   }
 }

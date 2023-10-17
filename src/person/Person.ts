@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { IsNotEmpty, Length } from 'class-validator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -25,4 +25,4 @@ export class Person {
   lastName: string;
 }
 
-export type CreatePerson = Omit<Person, 'id'>;
+export class CreatePerson extends OmitType(Person, ['id'] as const) {}
