@@ -7,6 +7,10 @@ Implementiere CRUD-Endpunkte für den Datentyp Book.
 * update: PUT /books/id
 * delete: DELETE /books/id
 
+Erzeuge ein Modul: `nest generate module books`
+Erzeuge einen Controller: `nest generate controller books`
+Erzeuge einen Service: `nest generate service books`
+
 ```ts
 type Book = {
   id: number;
