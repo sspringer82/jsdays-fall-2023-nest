@@ -14,7 +14,7 @@ export class BooksService {
   }
 
   async getOne(id: number): Promise<Book> {
-    const book = this.bookRepository.findOneBy({ id });
+    const book = await this.bookRepository.findOneBy({ id });
     if (!book) {
       throw new NotFoundException(`Book with id ${id} not found`);
     }
